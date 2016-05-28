@@ -8,96 +8,18 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITextFieldDelegate {
+class ViewController: BaseMathViewController {
 
-    @IBOutlet weak var question: UILabel!
-    @IBOutlet weak var answer: UITextField!
-    @IBOutlet weak var right: UILabel!
-    @IBOutlet weak var wrong: UILabel!
-    @IBOutlet weak var close: UILabel!
-    @IBOutlet weak var score: UILabel!
-    
-    var correctAnswer: Int!
-    var currentScore: Int = 0
-    var waitingForNextQuestion: Bool = false
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        answer.text = ""
-        nextQuestion()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        answer.becomeFirstResponder()
-    }
-    
-    func nextQuestion() {
+    override func nextQuestion() {
         let a = Int(arc4random_uniform(11))
         let b = Int(arc4random_uniform(11))
         
         correctAnswer = a * b
         question.text = "What’s \(a) × \(b)?"
         answer.text = ""
-    }
-
-    @IBAction func checkAnswer(sender: AnyObject) {
-        if let answerText = answer.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()), let answerNumber = Int(answerText) where !waitingForNextQuestion {
-            if answerNumber == correctAnswer {
-                right.hidden = false
-                performSelector(#selector(hideRight), withObject: nil, afterDelay: 2)
-                
-                currentScore = currentScore + 1
-                updateScore()
-                waitingForNextQuestion = true
-            } else if answerIsClose(answerNumber) {
-                close.hidden = false
-                performSelector(#selector(hideClose), withObject: nil, afterDelay: 2)
-            } else {
-                wrong.hidden = false
-                performSelector(#selector(hideWrong), withObject: nil, afterDelay: 15)
-            }
-        } else {
-            answer.text = ""
-        }
-    }
-    
-    func hideRight() {
-        right.hidden = true
-        waitingForNextQuestion = false
         
-        nextQuestion()
+        answer.becomeFirstResponder()
     }
     
-    func hideWrong() {
-        wrong.hidden = true
-    }
-    
-    func hideClose() {
-        close.hidden = true
-    }
-    
-    func answerIsClose(answerNumber: Int) -> Bool {
-        return abs(correctAnswer - answerNumber) <= 2
-    }
-    
-    func updateScore() {
-        score.text = "Score: \(currentScore)"
-    }
-    
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        if string.endIndex == string.startIndex {
-            return true
-        }
-        
-        guard let _ = Int(string) else {
-            return false
-        }
-        
-        return true
-    }
-
 }
 
