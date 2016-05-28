@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var question: UILabel!
     @IBOutlet weak var answer: UITextField!
@@ -19,6 +19,7 @@ class ViewController: UIViewController {
     
     var correctAnswer: Int!
     var currentScore: Int = 0
+    var waitingForNextQuestion: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,13 +44,14 @@ class ViewController: UIViewController {
     }
 
     @IBAction func checkAnswer(sender: AnyObject) {
-        if let answerText = answer.text, let answerNumber = Int(answerText) {
+        if let answerText = answer.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()), let answerNumber = Int(answerText) where !waitingForNextQuestion {
             if answerNumber == correctAnswer {
                 right.hidden = false
                 performSelector(#selector(hideRight), withObject: nil, afterDelay: 2)
                 
                 currentScore = currentScore + 1
                 updateScore()
+                waitingForNextQuestion = true
             } else if answerIsClose(answerNumber) {
                 close.hidden = false
                 performSelector(#selector(hideClose), withObject: nil, afterDelay: 2)
@@ -57,11 +59,14 @@ class ViewController: UIViewController {
                 wrong.hidden = false
                 performSelector(#selector(hideWrong), withObject: nil, afterDelay: 15)
             }
+        } else {
+            answer.text = ""
         }
     }
     
     func hideRight() {
         right.hidden = true
+        waitingForNextQuestion = false
         
         nextQuestion()
     }
@@ -80,6 +85,18 @@ class ViewController: UIViewController {
     
     func updateScore() {
         score.text = "Score: \(currentScore)"
+    }
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        if string.endIndex == string.startIndex {
+            return true
+        }
+        
+        guard let _ = Int(string) else {
+            return false
+        }
+        
+        return true
     }
 
 }
