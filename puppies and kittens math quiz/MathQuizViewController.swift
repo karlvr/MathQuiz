@@ -8,7 +8,16 @@
 
 import UIKit
 
-class BaseMathViewController: UIViewController, UITextFieldDelegate {
+struct MathQuizQuestion {
+    var correctAnswer: Int
+    var question: String
+}
+
+protocol QuestionHandler {
+    func nextQuestion() -> MathQuizQuestion
+}
+
+class MathQuizViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var question: UILabel!
     @IBOutlet weak var answer: UITextField!
@@ -18,10 +27,17 @@ class BaseMathViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var close: UILabel!
     @IBOutlet weak var score: UILabel!
     
-    var correctAnswer: Int!
-    var currentScore: Int = 0
-    var waitingForNextQuestion: Bool = false
-    var speechRecognizer: SpeechRecognizerProtocol?
+    private var correctAnswer: Int {
+        return currentQuestion!.correctAnswer
+    }
+
+    private var currentScore: Int = 0
+    private var waitingForNextQuestion: Bool = false
+    private var speechRecognizer: SpeechRecognizerProtocol?
+
+    private var currentQuestion: MathQuizQuestion?
+
+    var questionHandler: QuestionHandler?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +47,11 @@ class BaseMathViewController: UIViewController, UITextFieldDelegate {
                 self.checkSpeechResult(result: result)
             })
         }
-        
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
         answer.text = ""
         nextQuestion()
     }
@@ -43,14 +63,19 @@ class BaseMathViewController: UIViewController, UITextFieldDelegate {
     }
     
     func nextQuestion() {
-        fatalError()
+        currentQuestion = questionHandler!.nextQuestion()
+
+        question.text = currentQuestion?.question
+        answer.text = ""
+
+        didNextQuestion()
     }
 
     func didNextQuestion() {
         answer.becomeFirstResponder()
 
         do {
-            try speechRecognizer?.start(contextualStrings: ["\(correctAnswer!)"])
+            try speechRecognizer?.start(contextualStrings: ["\(correctAnswer)"])
         } catch {
             print("Failed to start speech recognition: \(error)")
         }

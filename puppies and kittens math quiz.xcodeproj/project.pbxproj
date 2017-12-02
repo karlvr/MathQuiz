@@ -7,26 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B8162E4F1CF94711003EAB84 /* AdditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8162E4E1CF94711003EAB84 /* AdditionViewController.swift */; };
-		B8162E511CF94803003EAB84 /* BaseMathViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8162E501CF94803003EAB84 /* BaseMathViewController.swift */; };
+		B8162E4F1CF94711003EAB84 /* AdditionQuestionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8162E4E1CF94711003EAB84 /* AdditionQuestionHandler.swift */; };
+		B8162E511CF94803003EAB84 /* MathQuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8162E501CF94803003EAB84 /* MathQuizViewController.swift */; };
 		B8617E9C1CDD3E83006C8E01 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8617E9B1CDD3E83006C8E01 /* AppDelegate.swift */; };
-		B8617E9E1CDD3E83006C8E01 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8617E9D1CDD3E83006C8E01 /* ViewController.swift */; };
+		B8617E9E1CDD3E83006C8E01 /* MultiplicationQuestionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8617E9D1CDD3E83006C8E01 /* MultiplicationQuestionHandler.swift */; };
 		B8617EA11CDD3E83006C8E01 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8617E9F1CDD3E83006C8E01 /* Main.storyboard */; };
 		B8617EA31CDD3E83006C8E01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8617EA21CDD3E83006C8E01 /* Assets.xcassets */; };
 		B8617EA61CDD3E83006C8E01 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8617EA41CDD3E83006C8E01 /* LaunchScreen.storyboard */; };
+		B86A6E011FD35E4600FEE7BF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86A6E001FD35E4600FEE7BF /* MainViewController.swift */; };
 		B8C58FDE1FD33B32002D3215 /* Speech.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C58FDD1FD33B32002D3215 /* Speech.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B8162E4E1CF94711003EAB84 /* AdditionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdditionViewController.swift; sourceTree = "<group>"; };
-		B8162E501CF94803003EAB84 /* BaseMathViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseMathViewController.swift; sourceTree = "<group>"; };
+		B8162E4E1CF94711003EAB84 /* AdditionQuestionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdditionQuestionHandler.swift; sourceTree = "<group>"; };
+		B8162E501CF94803003EAB84 /* MathQuizViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MathQuizViewController.swift; sourceTree = "<group>"; };
 		B8617E981CDD3E83006C8E01 /* puppies and kittens math quiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "puppies and kittens math quiz.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8617E9B1CDD3E83006C8E01 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B8617E9D1CDD3E83006C8E01 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B8617E9D1CDD3E83006C8E01 /* MultiplicationQuestionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplicationQuestionHandler.swift; sourceTree = "<group>"; };
 		B8617EA01CDD3E83006C8E01 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B8617EA21CDD3E83006C8E01 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B8617EA51CDD3E83006C8E01 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B8617EA71CDD3E83006C8E01 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B86A6E001FD35E4600FEE7BF /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		B8C58FDD1FD33B32002D3215 /* Speech.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speech.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -61,14 +63,15 @@
 			isa = PBXGroup;
 			children = (
 				B8617E9B1CDD3E83006C8E01 /* AppDelegate.swift */,
-				B8617E9D1CDD3E83006C8E01 /* ViewController.swift */,
-				B8162E4E1CF94711003EAB84 /* AdditionViewController.swift */,
+				B8617E9D1CDD3E83006C8E01 /* MultiplicationQuestionHandler.swift */,
+				B8162E4E1CF94711003EAB84 /* AdditionQuestionHandler.swift */,
 				B8617E9F1CDD3E83006C8E01 /* Main.storyboard */,
 				B8617EA21CDD3E83006C8E01 /* Assets.xcassets */,
 				B8617EA41CDD3E83006C8E01 /* LaunchScreen.storyboard */,
 				B8617EA71CDD3E83006C8E01 /* Info.plist */,
-				B8162E501CF94803003EAB84 /* BaseMathViewController.swift */,
+				B8162E501CF94803003EAB84 /* MathQuizViewController.swift */,
 				B8C58FDD1FD33B32002D3215 /* Speech.swift */,
+				B86A6E001FD35E4600FEE7BF /* MainViewController.swift */,
 			);
 			path = "puppies and kittens math quiz";
 			sourceTree = "<group>";
@@ -146,10 +149,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B8162E4F1CF94711003EAB84 /* AdditionViewController.swift in Sources */,
-				B8617E9E1CDD3E83006C8E01 /* ViewController.swift in Sources */,
+				B8162E4F1CF94711003EAB84 /* AdditionQuestionHandler.swift in Sources */,
+				B8617E9E1CDD3E83006C8E01 /* MultiplicationQuestionHandler.swift in Sources */,
 				B8617E9C1CDD3E83006C8E01 /* AppDelegate.swift in Sources */,
-				B8162E511CF94803003EAB84 /* BaseMathViewController.swift in Sources */,
+				B86A6E011FD35E4600FEE7BF /* MainViewController.swift in Sources */,
+				B8162E511CF94803003EAB84 /* MathQuizViewController.swift in Sources */,
 				B8C58FDE1FD33B32002D3215 /* Speech.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

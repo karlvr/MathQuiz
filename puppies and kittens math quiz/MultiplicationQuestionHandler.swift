@@ -8,17 +8,15 @@
 
 import UIKit
 
-class ViewController: BaseMathViewController {
+class MultiplicationQuestionHandler: QuestionHandler {
 
-    override func nextQuestion() {
+    func nextQuestion() -> MathQuizQuestion {
         let a = Int(arc4random_uniform(11))
         let b = Int(arc4random_uniform(11))
         
-        correctAnswer = a * b
-        question.text = "What’s \(a) × \(b)?"
-        answer.text = ""
-        
-        didNextQuestion()
+        let correctAnswer = a * b
+        let question = "What’s \(a) × \(b)?"
+        return MathQuizQuestion(correctAnswer: correctAnswer, question: question)
     }
     
 }

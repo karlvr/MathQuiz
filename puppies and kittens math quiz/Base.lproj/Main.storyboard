@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Math Quiz View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="puppies_and_kittens_math_quiz" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MathQuizViewController" customModule="puppies_and_kittens_math_quiz" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -147,12 +147,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="609" y="372"/>
+            <point key="canvasLocation" x="714" y="1145"/>
         </scene>
-        <!--View Controller-->
+        <!--Main View Controller-->
         <scene sceneID="kIm-g0-oCR">
             <objects>
-                <viewController id="9lM-LP-qwf" sceneMemberID="viewController">
+                <viewController id="9lM-LP-qwf" customClass="MainViewController" customModule="puppies_and_kittens_math_quiz" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JtR-4P-cre"/>
                         <viewControllerLayoutGuide type="bottom" id="WxK-v9-whH"/>
@@ -165,14 +165,14 @@
                                 <rect key="frame" x="117" y="97" width="92" height="30"/>
                                 <state key="normal" title="Multiplication"/>
                                 <connections>
-                                    <segue destination="BYZ-38-t0r" kind="show" id="op5-nO-bhd"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="multiplication" id="op5-nO-bhd"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pgo-gk-CdB">
                                 <rect key="frame" x="58" y="153" width="57" height="30"/>
                                 <state key="normal" title="Addition"/>
                                 <connections>
-                                    <segue destination="rK7-BR-B6G" kind="show" id="qos-h9-HYv"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="addition" id="xAi-O7-SnV"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -189,144 +189,8 @@
             </objects>
             <point key="canvasLocation" x="-495" y="1145"/>
         </scene>
-        <!--Addition View Controller-->
-        <scene sceneID="tZb-kT-MV6">
-            <objects>
-                <viewController id="rK7-BR-B6G" customClass="AdditionViewController" customModule="puppies_and_kittens_math_quiz" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="HS6-D6-IuN"/>
-                        <viewControllerLayoutGuide type="bottom" id="8Xt-ps-qFu"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="9Rm-2m-Taq">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="What's 3 + 9?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rch-vc-FRf">
-                                <rect key="frame" x="147" y="60" width="305" height="60"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="50"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="12" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9cX-ra-JCO">
-                                <rect key="frame" x="137.5" y="156" width="100" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="SPA-3G-Qtq"/>
-                                    <constraint firstAttribute="width" constant="100" id="dYG-mo-iMR"/>
-                                    <constraint firstAttribute="width" constant="200" id="roL-IQ-dJn"/>
-                                </constraints>
-                                <color key="textColor" red="1" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
-                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="roL-IQ-dJn"/>
-                                    </mask>
-                                </variation>
-                                <connections>
-                                    <outlet property="delegate" destination="rK7-BR-B6G" id="pCV-dL-cD2"/>
-                                </connections>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3ni-jD-I4i">
-                                <rect key="frame" x="255.5" y="159" width="41" height="44"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                                <state key="normal" title="Go!"/>
-                                <connections>
-                                    <action selector="checkAnswer:" destination="rK7-BR-B6G" eventType="touchUpInside" id="J2Y-mQ-Ntv"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="when you have answered the press the &quot;go!&quot; button" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4em-bI-gl5">
-                                <rect key="frame" x="0.0" y="610.5" width="375" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You're right!!!!!!! 🐷" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="inf-eg-1aF">
-                                <rect key="frame" x="0.0" y="214" width="375" height="131.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="55"/>
-                                <color key="textColor" red="1" green="0.40000000600000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Axd-s7-gJY">
-                                <rect key="frame" x="20" y="214" width="335" height="267.5"/>
-                                <string key="text">sadly you're wrong BUT WE WILL HELP YOU so do not worry you just press the learn my times and your times that you got wrong will be transfered into it🦄</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <color key="textColor" red="0.40000000600000002" green="1" blue="0.80000001190000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="you're close 🦁🍎" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6PL-s9-acp">
-                                <rect key="frame" x="0.0" y="228" width="375" height="51.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="42"/>
-                                <color key="textColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="highlightedColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="shadowColor" red="1" green="0.43529412150000002" blue="0.81176471709999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3bc-uX-GJG">
-                                <rect key="frame" x="303" y="20" width="64" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zJd-ey-uLJ">
-                                <rect key="frame" x="22" y="20" width="34" height="30"/>
-                                <state key="normal" title="Back"/>
-                                <connections>
-                                    <action selector="dismiss:" destination="rK7-BR-B6G" eventType="touchUpInside" id="VYC-SL-YMv"/>
-                                </connections>
-                            </button>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Huh? 🙀🙀😿" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gsy-IR-aWC" userLabel="Huh">
-                                <rect key="frame" x="15.5" y="287" width="344" height="72"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="60"/>
-                                <color key="textColor" red="0.57874745130000005" green="0.32151988149999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="inf-eg-1aF" firstAttribute="width" secondItem="9Rm-2m-Taq" secondAttribute="width" id="2f5-CO-7O2"/>
-                            <constraint firstItem="zJd-ey-uLJ" firstAttribute="leading" secondItem="9Rm-2m-Taq" secondAttribute="leadingMargin" constant="6" id="4QD-NJ-S3x"/>
-                            <constraint firstItem="inf-eg-1aF" firstAttribute="top" secondItem="9cX-ra-JCO" secondAttribute="bottom" constant="8" id="6Au-Va-YDC"/>
-                            <constraint firstItem="Rch-vc-FRf" firstAttribute="centerX" secondItem="9Rm-2m-Taq" secondAttribute="centerX" id="6q8-sZ-qoD"/>
-                            <constraint firstItem="9cX-ra-JCO" firstAttribute="centerX" secondItem="9Rm-2m-Taq" secondAttribute="centerX" id="8k0-cm-Kg1"/>
-                            <constraint firstItem="Axd-s7-gJY" firstAttribute="top" secondItem="inf-eg-1aF" secondAttribute="top" id="BgH-VX-gWq"/>
-                            <constraint firstItem="9cX-ra-JCO" firstAttribute="top" secondItem="Rch-vc-FRf" secondAttribute="bottom" constant="36" id="Bi8-ya-gmT"/>
-                            <constraint firstItem="Rch-vc-FRf" firstAttribute="top" secondItem="HS6-D6-IuN" secondAttribute="bottom" constant="40" id="Bwb-Tf-tNY"/>
-                            <constraint firstItem="3bc-uX-GJG" firstAttribute="top" secondItem="HS6-D6-IuN" secondAttribute="bottom" id="EHM-ci-OxF"/>
-                            <constraint firstItem="inf-eg-1aF" firstAttribute="centerX" secondItem="9Rm-2m-Taq" secondAttribute="centerX" id="Ejt-i2-ytv"/>
-                            <constraint firstItem="4em-bI-gl5" firstAttribute="width" secondItem="9Rm-2m-Taq" secondAttribute="width" id="HNh-Wm-NCm"/>
-                            <constraint firstItem="4em-bI-gl5" firstAttribute="top" secondItem="9cX-ra-JCO" secondAttribute="bottom" constant="160" id="I8R-YR-UNJ"/>
-                            <constraint firstItem="3ni-jD-I4i" firstAttribute="leading" secondItem="9cX-ra-JCO" secondAttribute="trailing" constant="18" id="L5J-mB-A83"/>
-                            <constraint firstItem="6PL-s9-acp" firstAttribute="width" secondItem="9Rm-2m-Taq" secondAttribute="width" id="Nm5-Iv-nuz"/>
-                            <constraint firstItem="4em-bI-gl5" firstAttribute="centerX" secondItem="9Rm-2m-Taq" secondAttribute="centerX" id="Prq-5M-bRT"/>
-                            <constraint firstItem="Gsy-IR-aWC" firstAttribute="centerX" secondItem="9Rm-2m-Taq" secondAttribute="centerX" id="Thq-nz-QkO"/>
-                            <constraint firstItem="6PL-s9-acp" firstAttribute="top" secondItem="9cX-ra-JCO" secondAttribute="bottom" constant="22" id="UMN-k2-8u7"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="3bc-uX-GJG" secondAttribute="trailing" constant="-8" id="Zr5-6U-ZOk"/>
-                            <constraint firstItem="8Xt-ps-qFu" firstAttribute="top" secondItem="4em-bI-gl5" secondAttribute="bottom" constant="35.5" id="d1h-ci-Mcj"/>
-                            <constraint firstItem="Axd-s7-gJY" firstAttribute="width" secondItem="9Rm-2m-Taq" secondAttribute="width" constant="-40" id="jg5-Q7-U4o"/>
-                            <constraint firstItem="zJd-ey-uLJ" firstAttribute="top" secondItem="HS6-D6-IuN" secondAttribute="bottom" id="klR-Ox-W26"/>
-                            <constraint firstItem="3ni-jD-I4i" firstAttribute="centerY" secondItem="9cX-ra-JCO" secondAttribute="centerY" id="pei-DD-mPd"/>
-                            <constraint firstItem="Gsy-IR-aWC" firstAttribute="top" secondItem="9cX-ra-JCO" secondAttribute="bottom" constant="81" id="qZf-dg-sEd"/>
-                            <constraint firstItem="6PL-s9-acp" firstAttribute="centerX" secondItem="9Rm-2m-Taq" secondAttribute="centerX" id="ycN-uG-5gh"/>
-                            <constraint firstItem="Axd-s7-gJY" firstAttribute="centerX" secondItem="9Rm-2m-Taq" secondAttribute="centerX" id="yn9-BX-DL8"/>
-                        </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="I8R-YR-UNJ"/>
-                            </mask>
-                        </variation>
-                    </view>
-                    <connections>
-                        <outlet property="answer" destination="9cX-ra-JCO" id="fVq-cW-MVO"/>
-                        <outlet property="close" destination="6PL-s9-acp" id="rQi-Zo-kr1"/>
-                        <outlet property="huh" destination="Gsy-IR-aWC" id="DCA-60-nZ7"/>
-                        <outlet property="question" destination="Rch-vc-FRf" id="xce-jX-cIX"/>
-                        <outlet property="right" destination="inf-eg-1aF" id="hkN-au-3AF"/>
-                        <outlet property="score" destination="3bc-uX-GJG" id="2RF-eS-egf"/>
-                        <outlet property="wrong" destination="Axd-s7-gJY" id="DPI-e4-UHK"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zuH-rb-gKz" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="652" y="1719.4902548725638"/>
-        </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="xAi-O7-SnV"/>
+    </inferredMetricsTieBreakers>
 </document>
