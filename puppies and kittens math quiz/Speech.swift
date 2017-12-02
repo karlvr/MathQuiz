@@ -105,16 +105,17 @@ class SpeechRecognizer: NSObject, SpeechRecognizerProtocol {
         // A recognition task represents a speech recognition session.
         // We keep a reference to the task so that it can be cancelled.
         var recognitionTask: SFSpeechRecognitionTask?
-        recognitionTask = speechRecognizer.recognitionTask(with: recognitionRequest) { result, error in
+        recognitionTask = speechRecognizer.recognitionTask(with: recognitionRequest) { [weak self] result, error in
+            guard let strongSelf = self else { return }
             if let result = result {
                 if result.isFinal {
                     print("FINISHING")
-                    self.handler(result.bestTranscription.formattedString)
-                    self.finished()
-                } else if !self.finishing {
+                    strongSelf.handler(result.bestTranscription.formattedString)
+                    strongSelf.finished()
+                } else if !strongSelf.finishing {
                     print("SCHEDULING FINISH")
-                    NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.finishTask), object: nil)
-                    self.perform(#selector(self.finishTask), with: nil, afterDelay: 1)
+                    NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(strongSelf.finishTask), object: nil)
+                    strongSelf.perform(#selector(strongSelf.finishTask), with: nil, afterDelay: 1)
                 } else {
                     print("RESULT WHILE FINISHING")
                 }
@@ -123,9 +124,10 @@ class SpeechRecognizer: NSObject, SpeechRecognizerProtocol {
             print("error=\(error) isFinal=\(result?.isFinal)")
 
             if error != nil {
-                if recognitionTask == self.recognitionTask {
-                    print("RESTARTING DUE TO ERROR")
-                    self.restart()
+                if recognitionTask == strongSelf.recognitionTask {
+//                    print("RESTARTING DUE TO ERROR")
+//                    strongSelf.restart()
+                    print("Received error, stopping")
                 } else {
                     print("Ignore")
                 }
