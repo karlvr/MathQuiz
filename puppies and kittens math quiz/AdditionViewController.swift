@@ -24,8 +24,8 @@ class AdditionViewController: BaseMathViewController {
         correctAnswer = a + b
         question.text = "What’s \(a) + \(b)?"
         answer.text = ""
-        
-        answer.becomeFirstResponder()
+
+        didNextQuestion()
     }
 
 }

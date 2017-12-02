@@ -18,7 +18,7 @@ class ViewController: BaseMathViewController {
         question.text = "What’s \(a) × \(b)?"
         answer.text = ""
         
-        answer.becomeFirstResponder()
+        didNextQuestion()
     }
     
 }

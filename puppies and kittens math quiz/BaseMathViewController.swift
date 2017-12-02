@@ -14,21 +14,29 @@ class BaseMathViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var answer: UITextField!
     @IBOutlet weak var right: UILabel!
     @IBOutlet weak var wrong: UILabel!
+    @IBOutlet weak var huh: UILabel!
     @IBOutlet weak var close: UILabel!
     @IBOutlet weak var score: UILabel!
     
     var correctAnswer: Int!
     var currentScore: Int = 0
     var waitingForNextQuestion: Bool = false
+    var speechRecognizer: SpeechRecognizerProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        if #available(iOS 10.0, *) {
+            speechRecognizer = SpeechRecognizer(handler: { (result) in
+                self.checkSpeechResult(result: result)
+            })
+        }
         
         answer.text = ""
         nextQuestion()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         answer.becomeFirstResponder()
@@ -37,54 +45,179 @@ class BaseMathViewController: UIViewController, UITextFieldDelegate {
     func nextQuestion() {
         fatalError()
     }
-    
-    @IBAction func checkAnswer(sender: AnyObject) {
-        if let answerText = answer.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()), let answerNumber = Int(answerText) where !waitingForNextQuestion {
-            if answerNumber == correctAnswer {
-                right.hidden = false
-                close.hidden = true
-                wrong.hidden = true
-                performSelector(#selector(hideRight), withObject: nil, afterDelay: 2)
-                
-                currentScore = currentScore + 1
-                updateScore()
-                waitingForNextQuestion = true
-                
-                answer.resignFirstResponder()
-            } else if answerIsClose(answerNumber) {
-                close.hidden = false
-                right.hidden = true
-                wrong.hidden = true
-                
-                performSelector(#selector(hideClose), withObject: nil, afterDelay: 2)
+
+    func didNextQuestion() {
+        answer.becomeFirstResponder()
+
+        do {
+            try speechRecognizer?.start(contextualStrings: ["\(correctAnswer!)"])
+        } catch {
+            print("Failed to start speech recognition: \(error)")
+        }
+    }
+
+    private func extractNumbers(string: String) -> [Int] {
+        let spellOutFormatter = NumberFormatter()
+        spellOutFormatter.numberStyle = .spellOut
+
+        let numberFormatter = NumberFormatter()
+
+        var result = [Int]()
+        string.enumerateLinguisticTags(in: string.startIndex..<string.endIndex, scheme: NSLinguisticTagScheme.lexicalClass.rawValue, options: [], orthography: nil) { (tag, tokenRange, _, _) in
+            let token = String(string[tokenRange]).lowercased()
+
+            if let number = spellOutFormatter.number(from: token) {
+                print("FOUND SPELLED NUMBER \(number)")
+                result.append(number.intValue)
+            } else if let number = numberFormatter.number(from: token) {
+                print("FOUND NUMBER \(number)")
+                result.append(number.intValue)
+            } else if token == "to" || token == "too" {
+                result.append(2)
+            } else if token == "sex" || token == "sucks" {
+                result.append(6)
+            } else if token == "teen" || token == "team" || token == "tin" {
+                result.append(10)
+            } else if token == "through" {
+                result.append(3)
+            } else if token == "won" {
+                result.append(1)
+            } else if token == "ate" {
+                result.append(8)
+            } else if token == "sarah" {
+                result.append(0)
             } else {
-                wrong.hidden = false
-                close.hidden = true
-                right.hidden = true
-                
-                performSelector(#selector(hideWrong), withObject: nil, afterDelay: 15)
+                print("NOT NUMBER \"\(token)\"")
             }
+        }
+        return result
+    }
+
+    private func checkSpeechResult(result: String) {
+        guard !waitingForNextQuestion else {
+            return
+        }
+
+        let numbers = extractNumbers(string: result)
+
+        print("Checking \(result) => \(numbers)")
+        guard !numbers.isEmpty else {
+            answer.text = ""
+            gotUnintelligibleAnswer()
+            return
+        }
+
+        let lastNumber = numbers[numbers.endIndex.advanced(by: -1)]
+        answer.text = "\(lastNumber)"
+        checkAnswerNumber(lastNumber)
+    }
+
+    private func cancelPreviousDelays() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(hideRight), object: nil)
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(hideClose), object: nil)
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(hideWrong), object: nil)
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(hideUnintelligble), object: nil)
+    }
+
+    private func gotAnswerRight() {
+        guard !waitingForNextQuestion else {
+            return
+        }
+        right.isHidden = false
+        close.isHidden = true
+        wrong.isHidden = true
+        huh.isHidden = true
+
+        cancelPreviousDelays()
+        perform(#selector(hideRight), with: nil, afterDelay: 2)
+
+        currentScore = currentScore + 1
+        updateScore()
+        waitingForNextQuestion = true
+
+        answer.resignFirstResponder()
+    }
+
+    private func gotAnswerClose() {
+        guard !waitingForNextQuestion else {
+            return
+        }
+
+        close.isHidden = false
+        right.isHidden = true
+        wrong.isHidden = true
+        huh.isHidden = true
+
+        cancelPreviousDelays()
+        perform(#selector(hideClose), with: nil, afterDelay: 2)
+    }
+
+    private func gotAnswerWrong() {
+        guard !waitingForNextQuestion else {
+            return
+        }
+        
+        wrong.isHidden = false
+        close.isHidden = true
+        right.isHidden = true
+        huh.isHidden = true
+
+        cancelPreviousDelays()
+        perform(#selector(hideWrong), with: nil, afterDelay: 15)
+    }
+
+    private func gotUnintelligibleAnswer() {
+        guard !waitingForNextQuestion else {
+            return
+        }
+
+        huh.isHidden = false
+        wrong.isHidden = true
+        close.isHidden = true
+        right.isHidden = true
+
+        cancelPreviousDelays()
+        perform(#selector(hideUnintelligble), with: nil, afterDelay: 2)
+    }
+
+    private func checkAnswerNumber(_ answerNumber: Int) {
+        if answerNumber == correctAnswer {
+            gotAnswerRight()
+        } else if answerIsClose(answerNumber) {
+            gotAnswerClose()
+        } else {
+            gotAnswerWrong()
+        }
+    }
+    
+    @IBAction func checkAnswer(_ sender: AnyObject) {
+        if let answerText = answer.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines), let answerNumber = Int(answerText), !waitingForNextQuestion {
+            checkAnswerNumber(answerNumber)
         } else {
             answer.text = ""
         }
     }
     
-    func hideRight() {
-        right.hidden = true
+    @objc func hideRight() {
+        right.isHidden = true
         waitingForNextQuestion = false
         
         nextQuestion()
     }
     
-    func hideWrong() {
-        wrong.hidden = true
+    @objc func hideWrong() {
+        wrong.isHidden = true
     }
     
-    func hideClose() {
-        close.hidden = true
+    @objc func hideClose() {
+        close.isHidden = true
+    }
+
+    @objc func hideUnintelligble() {
+        huh.isHidden = true
     }
     
-    func answerIsClose(answerNumber: Int) -> Bool {
+    func answerIsClose(_ answerNumber: Int) -> Bool {
         return abs(correctAnswer - answerNumber) <= 2
     }
     
@@ -92,7 +225,7 @@ class BaseMathViewController: UIViewController, UITextFieldDelegate {
         score.text = "Score: \(currentScore)"
     }
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if string.endIndex == string.startIndex {
             return true
         }
@@ -104,13 +237,13 @@ class BaseMathViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         checkAnswer(textField)
         return true
     }
     
-    @IBAction func dismiss(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func dismiss(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
     
 }
